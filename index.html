@@ -3,282 +3,186 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Kuxtal Travel — Club de Viajes</title>
-<meta name="description" content="El club de viajes de Guatemala. Tarifas preferenciales, destinos exclusivos en Latinoamérica y el mundo, y experiencias entre socios." />
+<title>Kuxtal Travels — Cada destino, una historia</title>
+<meta name="description" content="El club de viajes de Guatemala. Tarifas preferenciales, destinos exclusivos en Latinoamérica y el mundo, cruceros, vuelos y hospedaje. Cada destino, una historia." />
 <style>
+  /* Marca oficial Kuxtal Travels (brandbook): navy #1b365d + lima #8dc63f + blanco/negro/gris */
   :root{
-    --ink:#0f2c2a; --deep:#0c3b34; --emerald:#127a5f; --teal:#1aa17d;
-    --gold:#d9a441; --gold-soft:#f0d79a; --cream:#f7f3ea; --paper:#fffdf8;
-    --gray:#5c6b66; --line:rgba(15,44,42,.12);
+    --navy:#1b365d; --navy-d:#0f2438; --lima:#8dc63f; --lima-d:#6f9e12;
+    --ink:#0f2438; --gray:#5b6577; --mist:#f1f4f8; --paper:#ffffff; --line:rgba(27,54,93,.12);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html{scroll-behavior:smooth;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
-    color:var(--ink);background:var(--paper);line-height:1.55;overflow-x:hidden;}
-  h1,h2,h3{line-height:1.1;letter-spacing:-.02em;font-weight:800;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;overflow-x:hidden;}
+  h1,h2,h3{line-height:1.08;letter-spacing:-.02em;font-weight:800;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
   a{color:inherit;text-decoration:none;}
   .btn{display:inline-block;padding:15px 30px;border-radius:100px;font-weight:700;font-size:16px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;}
-  .btn-gold{background:linear-gradient(120deg,var(--gold),#c8912f);color:#231600;box-shadow:0 10px 30px rgba(217,164,65,.35);}
-  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(217,164,65,.45);}
-  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.5);color:#fff;}
-
-  /* nav */
-  header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(10px);
-    background:rgba(12,59,52,.72);border-bottom:1px solid rgba(255,255,255,.08);}
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  .logo{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;font-size:20px;letter-spacing:.01em;}
-  .logo .mk{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--teal));
-    display:grid;place-items:center;color:#0c3b34;font-size:16px;}
-  nav .cta{padding:10px 20px;font-size:14px;}
+  .btn-lima{background:var(--lima);color:var(--navy-d);box-shadow:0 10px 30px rgba(141,198,63,.4);}
+  .btn-lima:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(141,198,63,.5);}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.55);color:#fff;}
+  .logo{display:inline-flex;flex-direction:column;line-height:1;position:relative;}
+  .logo .k{font-family:"Arial Narrow","Helvetica Neue Condensed",Impact,sans-serif;font-stretch:condensed;font-weight:800;font-size:29px;letter-spacing:.02em;text-transform:uppercase;color:var(--kx,var(--navy));}
+  .logo .t{font-weight:700;font-size:11px;letter-spacing:.44em;text-transform:uppercase;color:var(--kx,var(--navy));margin-top:1px;margin-left:2px;}
+  .logo .orbit{position:absolute;right:-16px;top:2px;font-size:20px;color:var(--lima);transform:rotate(-16deg);}
+  .on-dark .k,.on-dark .t{--kx:#fff;}
+  header{position:fixed;inset:0 0 auto 0;z-index:50;backdrop-filter:blur(10px);background:rgba(15,36,56,.82);border-bottom:1px solid rgba(255,255,255,.08);}
+  nav{display:flex;align-items:center;justify-content:space-between;height:66px;}
   nav .links{display:none;gap:26px;color:rgba(255,255,255,.85);font-size:15px;font-weight:500;}
-  nav .links a:hover{color:var(--gold-soft);}
-  @media(min-width:820px){ nav .links{display:flex;} }
-
-  /* hero */
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;
-    background:radial-gradient(120% 90% at 80% 10%,#12604c 0%,var(--deep) 45%,var(--ink) 100%);
-    color:#fff;overflow:hidden;padding:96px 0 60px;}
-  .hero::before{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
-    background:
-      radial-gradient(40% 40% at 15% 85%,rgba(26,161,125,.35),transparent),
-      radial-gradient(35% 35% at 90% 60%,rgba(217,164,65,.18),transparent);}
-  .hero-inner{position:relative;z-index:2;max-width:680px;}
-  .kicker{display:inline-block;color:var(--gold-soft);font-weight:700;font-size:13px;
-    letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;
-    border:1px solid rgba(240,215,154,.35);padding:6px 14px;border-radius:100px;}
-  .hero h1{font-size:clamp(38px,7.5vw,68px);margin-bottom:20px;}
-  .hero h1 .g{background:linear-gradient(110deg,var(--gold-soft),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .hero p.lead{font-size:clamp(17px,2.4vw,21px);color:rgba(247,243,234,.82);max-width:560px;margin-bottom:32px;}
+  nav .links a:hover{color:var(--lima);}
+  nav .cta{padding:10px 20px;font-size:14px;}
+  @media(min-width:840px){ nav .links{display:flex;} }
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;color:#fff;padding:98px 0 60px;background:radial-gradient(120% 95% at 82% 8%,#22467a 0%,var(--navy) 42%,var(--navy-d) 100%);overflow:hidden;}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;background:radial-gradient(38% 40% at 12% 88%,rgba(141,198,63,.30),transparent),radial-gradient(34% 34% at 92% 62%,rgba(141,198,63,.12),transparent);}
+  .hero-inner{position:relative;z-index:2;max-width:700px;}
+  .kicker{display:inline-block;color:var(--lima);font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;border:1px solid rgba(141,198,63,.4);padding:6px 14px;border-radius:100px;}
+  .hero h1{font-size:clamp(38px,7.6vw,70px);margin-bottom:18px;}
+  .hero h1 .g{color:var(--lima);}
+  .hero .slogan{font-style:italic;color:rgba(255,255,255,.72);font-size:clamp(16px,2.3vw,20px);margin-bottom:22px;}
+  .hero p.lead{font-size:clamp(17px,2.3vw,20px);color:rgba(233,238,245,.86);max-width:560px;margin-bottom:32px;}
   .hero .actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
-  .hero .trust{margin-top:38px;display:flex;gap:28px;flex-wrap:wrap;color:rgba(247,243,234,.7);font-size:14px;}
-  .hero .trust b{color:#fff;font-size:22px;display:block;font-weight:800;}
-
-  /* sections */
-  section{padding:78px 0;}
-  .eyebrow{color:var(--emerald);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
-  .sec-title{font-size:clamp(28px,5vw,44px);margin-bottom:14px;}
-  .sec-sub{color:var(--gray);font-size:18px;max-width:620px;}
-
+  .hero .trust{margin-top:40px;display:flex;gap:30px;flex-wrap:wrap;color:rgba(233,238,245,.72);font-size:14px;}
+  .hero .trust b{color:#fff;font-size:22px;display:block;font-weight:800;} .hero .trust b .u{color:var(--lima);}
+  section{padding:80px 0;}
+  .eyebrow{color:var(--lima-d);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
+  .sec-title{font-size:clamp(28px,5vw,44px);margin-bottom:14px;color:var(--navy);}
+  .sec-sub{color:var(--gray);font-size:18px;max-width:640px;}
   .grid{display:grid;gap:20px;margin-top:44px;grid-template-columns:1fr;}
-  @media(min-width:640px){ .grid.two{grid-template-columns:1fr 1fr;} .grid.four{grid-template-columns:1fr 1fr;} }
-  @media(min-width:960px){ .grid.four{grid-template-columns:repeat(4,1fr);} }
-
-  .card{background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:28px;}
-  .card .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:24px;
-    background:linear-gradient(135deg,rgba(26,161,125,.16),rgba(217,164,65,.16));margin-bottom:16px;}
-  .card h3{font-size:20px;margin-bottom:8px;}
-  .card p{color:var(--gray);font-size:15.5px;}
-
-  /* destinos */
-  .destinos{background:linear-gradient(180deg,var(--deep),var(--ink));color:#fff;}
-  .destinos .sec-sub{color:rgba(247,243,234,.72);}
+  @media(min-width:640px){ .grid.four{grid-template-columns:1fr 1fr;} }
+  @media(min-width:980px){ .grid.four{grid-template-columns:repeat(4,1fr);} }
+  .card{background:var(--mist);border:1px solid var(--line);border-radius:20px;padding:28px;}
+  .card .ic{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;font-size:24px;background:var(--navy);color:var(--lima);margin-bottom:16px;}
+  .card h3{font-size:20px;margin-bottom:8px;color:var(--navy);} .card p{color:var(--gray);font-size:15.5px;}
+  .destinos{background:linear-gradient(180deg,var(--navy),var(--navy-d));color:#fff;}
+  .destinos .sec-title{color:#fff;} .destinos .sec-sub{color:rgba(233,238,245,.75);}
   .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;}
-  .chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:100px;
-    padding:12px 20px;font-weight:600;font-size:15px;color:rgba(247,243,234,.92);}
-  .chip span{color:var(--gold-soft);}
-
-  /* pasos */
-  .steps{counter-reset:s;display:grid;gap:20px;margin-top:44px;grid-template-columns:1fr;}
-  @media(min-width:760px){ .steps{grid-template-columns:repeat(3,1fr);} }
-  .step{position:relative;padding:28px 24px;border:1px solid var(--line);border-radius:20px;background:var(--paper);}
-  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-16px;left:24px;
-    width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#c8912f);
-    color:#231600;font-weight:800;display:grid;place-items:center;font-size:18px;}
-  .step h3{font-size:19px;margin:14px 0 6px;}
-  .step p{color:var(--gray);font-size:15px;}
-
-  /* form */
-  .join{background:radial-gradient(90% 120% at 20% 0%,#12604c,var(--deep));color:#fff;}
-  .join-card{background:var(--paper);color:var(--ink);border-radius:26px;padding:34px;max-width:560px;margin:40px auto 0;
-    box-shadow:0 30px 80px rgba(0,0,0,.3);}
-  .field{margin-bottom:16px;}
-  .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px;}
+  .chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:12px 20px;font-weight:600;font-size:15px;color:rgba(233,238,245,.92);}
+  .chip span{color:var(--lima);}
+  .steps{counter-reset:s;display:grid;gap:22px;margin-top:48px;grid-template-columns:1fr;}
+  @media(min-width:780px){ .steps{grid-template-columns:repeat(3,1fr);} }
+  .step{position:relative;padding:30px 24px 26px;border:1px solid var(--line);border-radius:20px;background:var(--paper);}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-16px;left:24px;width:40px;height:40px;border-radius:50%;background:var(--lima);color:var(--navy-d);font-weight:800;display:grid;place-items:center;font-size:18px;}
+  .step h3{font-size:19px;margin:14px 0 6px;color:var(--navy);} .step p{color:var(--gray);font-size:15px;}
+  .join{background:radial-gradient(90% 120% at 20% 0%,#22467a,var(--navy-d));color:#fff;} .join .sec-title{color:#fff;}
+  .join-card{background:var(--paper);color:var(--ink);border-radius:26px;padding:34px;max-width:560px;margin:40px auto 0;box-shadow:0 30px 80px rgba(0,0,0,.35);}
+  .field{margin-bottom:16px;} .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px;color:var(--navy);}
   .field input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit;background:#fff;}
-  .field input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,161,125,.15);}
-  .field .err{color:#c0392b;font-size:13px;margin-top:6px;display:none;}
-  .field.bad input{border-color:#c0392b;}
-  .field.bad .err{display:block;}
+  .field input:focus{outline:none;border-color:var(--lima-d);box-shadow:0 0 0 3px rgba(141,198,63,.22);}
+  .field .err{color:#c0392b;font-size:13px;margin-top:6px;display:none;} .field.bad input{border-color:#c0392b;} .field.bad .err{display:block;}
   .join-card .btn{width:100%;margin-top:6px;}
-  .ok-msg{display:none;text-align:center;padding:20px;}
-  .ok-msg .big{font-size:44px;}
+  .ok-msg{display:none;text-align:center;padding:16px;} .ok-msg .big{font-size:46px;}
   .privacy{font-size:12.5px;color:var(--gray);text-align:center;margin-top:14px;}
-
-  /* footer */
-  footer{background:var(--ink);color:rgba(247,243,234,.72);padding:46px 0 34px;font-size:15px;}
-  footer .row{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;}
-  footer a:hover{color:var(--gold-soft);}
-  .note{background:#fff7e6;border:1px dashed var(--gold);color:#7a5a12;font-size:13px;border-radius:12px;padding:12px 16px;margin-top:18px;}
-
-  /* whatsapp float */
-  .wa{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;
-    background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(37,211,102,.45);font-size:30px;}
+  footer{background:var(--navy-d);color:rgba(233,238,245,.72);padding:48px 0 34px;font-size:15px;}
+  footer .row{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;} footer a:hover{color:var(--lima);}
+  .note{background:rgba(141,198,63,.12);border:1px dashed var(--lima);color:#3f5a12;font-size:13px;border-radius:12px;padding:12px 16px;margin-top:18px;}
+  .wa{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(37,211,102,.45);font-size:30px;}
 </style>
 </head>
 <body>
+<header><nav class="wrap">
+  <div class="logo on-dark"><span class="k">Kuxtal<span class="orbit">✈</span></span><span class="t">Travels</span></div>
+  <div class="links"><a href="#beneficios">Beneficios</a><a href="#destinos">Destinos</a><a href="#como">Cómo funciona</a></div>
+  <a href="#hacete-socio" class="btn btn-lima cta">Hacete socio</a>
+</nav></header>
 
-<header>
-  <nav class="wrap">
-    <div class="logo"><span class="mk">✦</span> Kuxtal <span style="opacity:.6;font-weight:600">Travel</span></div>
-    <div class="links">
-      <a href="#beneficios">Beneficios</a>
-      <a href="#destinos">Destinos</a>
-      <a href="#como">Cómo funciona</a>
-    </div>
-    <a href="#hacete-socio" class="btn btn-gold cta">Hacete socio</a>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap hero-inner">
-    <span class="kicker">Club de viajes · Guatemala</span>
-    <h1>Viajá más. <span class="g">Pagá como socio.</span></h1>
-    <p class="lead">El club que convierte tus vacaciones en experiencias: tarifas preferenciales, destinos exclusivos en Latinoamérica y el mundo, y viajes pensados entre nosotros.</p>
-    <div class="actions">
-      <a href="#hacete-socio" class="btn btn-gold">Quiero ser socio</a>
-      <a href="#beneficios" class="btn btn-ghost">Ver beneficios</a>
-    </div>
-    <div class="trust">
-      <div><b>+615</b> socios viajando</div>
-      <div><b>Latam + mundo</b> destinos exclusivos</div>
-      <div><b>Todo el año</b> ofertas para socios</div>
-    </div>
+<section class="hero"><div class="wrap hero-inner">
+  <span class="kicker">Club de viajes · Guatemala</span>
+  <h1>Viajá más. <span class="g">Pagá como socio.</span></h1>
+  <p class="slogan">“Cada destino, una historia.”</p>
+  <p class="lead">Tarifas preferenciales, destinos exclusivos en Latinoamérica y el mundo, cruceros, vuelos y hospedaje — y una comunidad que viaja junta.</p>
+  <div class="actions"><a href="#hacete-socio" class="btn btn-lima">Quiero ser socio</a><a href="#beneficios" class="btn btn-ghost">Ver beneficios</a></div>
+  <div class="trust">
+    <div><b>+<span class="u">615</span></b> socios viajando</div>
+    <div><b>Latam + mundo</b> destinos exclusivos</div>
+    <div><b>Todo el año</b> precios de socio</div>
   </div>
-</section>
+</div></section>
 
-<!-- BENEFICIOS -->
-<section id="beneficios">
-  <div class="wrap">
-    <div class="eyebrow">Por qué ser socio</div>
-    <h2 class="sec-title">Beneficios que se sienten en cada viaje</h2>
-    <p class="sec-sub">Ser parte de Kuxtal es viajar distinto: mejores precios, puertas que solo se abren entre socios, y una comunidad que se mueve junta.</p>
-    <div class="grid four">
-      <div class="card"><div class="ic">🏨</div><h3>Tarifas preferenciales</h3><p>Precios de socio en hoteles y paquetes vacacionales, todo el año.</p></div>
-      <div class="card"><div class="ic">🌎</div><h3>Destinos exclusivos</h3><p>Experiencias en Latinoamérica y el mundo, hechas a tu medida.</p></div>
-      <div class="card"><div class="ic">🥂</div><h3>Eventos entre socios</h3><p>Viajes y experiencias diseñadas especialmente para la comunidad.</p></div>
-      <div class="card"><div class="ic">🎟️</div><h3>Red de descuentos</h3><p>Ventajas en restaurantes, servicios y negocios de nuestra red.</p></div>
-    </div>
+<section id="beneficios"><div class="wrap">
+  <div class="eyebrow">Por qué ser socio</div>
+  <h2 class="sec-title">Beneficios que se sienten en cada viaje</h2>
+  <p class="sec-sub">Kuxtal es más que una agencia: es un club. Mejores precios, puertas que solo se abren entre socios, y experiencias que se vuelven historia.</p>
+  <div class="grid four">
+    <div class="card"><div class="ic">🏨</div><h3>Tarifas preferenciales</h3><p>Precios de socio en hoteles, vuelos, cruceros y hospedaje, todo el año.</p></div>
+    <div class="card"><div class="ic">🌎</div><h3>Destinos exclusivos</h3><p>Latinoamérica y el mundo, con viajes armados a tu medida.</p></div>
+    <div class="card"><div class="ic">🥂</div><h3>Experiencias entre socios</h3><p>Viajes y eventos diseñados especialmente para la comunidad Kuxtal.</p></div>
+    <div class="card"><div class="ic">🎟️</div><h3>Cupones y descuentos</h3><p>Ventajas en restaurantes, servicios y negocios de nuestra red.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- DESTINOS -->
-<section id="destinos" class="destinos">
-  <div class="wrap">
-    <div class="eyebrow" style="color:var(--gold-soft)">Adónde vamos</div>
-    <h2 class="sec-title">Del Caribe a Europa, a precio de socio</h2>
-    <p class="sec-sub">Armamos el viaje a tu medida. Estos son algunos de los destinos favoritos de la comunidad Kuxtal.</p>
-    <div class="chips">
-      <div class="chip">🏝️ <span>Cancún</span> &amp; Riviera Maya</div>
-      <div class="chip">⛰️ <span>Guatemala</span> (Atitlán · Petén)</div>
-      <div class="chip">🌴 <span>Punta Cana</span></div>
-      <div class="chip">🗽 <span>Estados Unidos</span></div>
-      <div class="chip">🏛️ <span>Europa</span></div>
-      <div class="chip">🌊 <span>Cruceros</span></div>
-      <div class="chip">✨ <span>A tu medida</span></div>
-    </div>
-    <div class="note">📸 Nota para George: acá van fotos reales de los destinos y el logo oficial cuando me los pasés — quedan hermosas de fondo.</div>
+<section id="destinos" class="destinos"><div class="wrap">
+  <div class="eyebrow" style="color:var(--lima)">Adónde vamos</div>
+  <h2 class="sec-title">Del Caribe a Europa, a precio de socio</h2>
+  <p class="sec-sub">Armamos el viaje a tu medida. Algunos de los destinos favoritos de la comunidad Kuxtal:</p>
+  <div class="chips">
+    <div class="chip">🏝️ <span>Cancún</span> &amp; Riviera Maya</div>
+    <div class="chip">⛰️ <span>Guatemala</span> · Atitlán · Petén</div>
+    <div class="chip">🌴 <span>Punta Cana</span></div>
+    <div class="chip">🚢 <span>Cruceros</span></div>
+    <div class="chip">🗽 <span>Estados Unidos</span></div>
+    <div class="chip">🏛️ <span>Europa</span></div>
+    <div class="chip">✈️ <span>A tu medida</span></div>
   </div>
-</section>
+  <div class="note">📸 Nota: acá van fotos reales de destinos y el logo oficial en alta (el del brandbook con el avión y la órbita lima) cuando estén a mano.</div>
+</div></section>
 
-<!-- COMO FUNCIONA -->
-<section id="como">
-  <div class="wrap">
-    <div class="eyebrow">Simple</div>
-    <h2 class="sec-title">Ser socio, en 3 pasos</h2>
-    <div class="steps">
-      <div class="step"><h3>Dejás tus datos</h3><p>Nos contás quién sos y adónde soñás viajar. Te contactamos personalmente.</p></div>
-      <div class="step"><h3>Elegís tu membresía</h3><p>Te mostramos los planes y beneficios. Vos elegís el que mejor te queda.</p></div>
-      <div class="step"><h3>Empezás a viajar</h3><p>Reservás con precio de socio y disfrutás la red de beneficios todo el año.</p></div>
-    </div>
+<section id="como"><div class="wrap">
+  <div class="eyebrow">Simple</div>
+  <h2 class="sec-title">Ser socio, en 3 pasos</h2>
+  <div class="steps">
+    <div class="step"><h3>Dejás tus datos</h3><p>Nos contás quién sos y adónde soñás viajar. Un asesor Kuxtal te contacta.</p></div>
+    <div class="step"><h3>Elegís tu membresía</h3><p>Te mostramos los planes y beneficios. Vos elegís el que mejor te queda.</p></div>
+    <div class="step"><h3>Empezás a viajar</h3><p>Reservás con precio de socio y disfrutás la red de beneficios todo el año.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- JOIN / LEAD -->
-<section id="hacete-socio" class="join">
-  <div class="wrap">
-    <div style="text-align:center;max-width:620px;margin:0 auto;">
-      <div class="eyebrow" style="color:var(--gold-soft)">Hacete socio</div>
-      <h2 class="sec-title">Dejá tus datos y te contamos todo</h2>
-      <p class="sec-sub" style="color:rgba(247,243,234,.8);margin:0 auto;">Sin compromiso. Un asesor de Kuxtal te contacta y te arma el plan a tu medida.</p>
-    </div>
-
-    <div class="join-card">
-      <form id="leadForm" novalidate>
-        <div class="field" id="f-nombre">
-          <label for="nombre">Tu nombre</label>
-          <input id="nombre" name="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" />
-          <div class="err">Contanos tu nombre.</div>
-        </div>
-        <div class="field" id="f-tel">
-          <label for="tel">WhatsApp / Teléfono</label>
-          <input id="tel" name="tel" type="tel" inputmode="numeric" placeholder="0000 0000 (8 dígitos)" autocomplete="tel" />
-          <div class="err">Un número de Guatemala tiene 8 dígitos.</div>
-        </div>
-        <div class="field" id="f-email">
-          <label for="email">Correo (opcional)</label>
-          <input id="email" name="email" type="email" placeholder="vos@correo.com" autocomplete="email" />
-          <div class="err">Revisá el correo.</div>
-        </div>
-        <button type="submit" class="btn btn-gold">Quiero que me contacten</button>
-        <p class="privacy">🔒 Tus datos son solo para que Kuxtal te contacte. No los compartimos.</p>
-      </form>
-      <div class="ok-msg" id="okMsg">
-        <div class="big">🎉</div>
-        <h3 style="margin:8px 0">¡Gracias, <span id="okName">socio</span>!</h3>
-        <p style="color:var(--gray)">Te vamos a contactar pronto. Si querés, escribinos ya por WhatsApp.</p>
-        <a href="#" id="waLink" class="btn btn-gold" style="margin-top:16px;display:inline-block;">Escribir por WhatsApp</a>
-      </div>
-    </div>
+<section id="hacete-socio" class="join"><div class="wrap">
+  <div style="text-align:center;max-width:640px;margin:0 auto;">
+    <div class="eyebrow" style="color:var(--lima)">Hacete socio</div>
+    <h2 class="sec-title">Dejá tus datos y te contamos todo</h2>
+    <p class="sec-sub" style="color:rgba(233,238,245,.82);margin:0 auto;">Sin compromiso. Un asesor de Kuxtal te contacta y te arma el plan a tu medida.</p>
   </div>
-</section>
-
-<footer>
-  <div class="wrap row">
-    <div><div class="logo" style="color:#fff;margin-bottom:8px"><span class="mk">✦</span> Kuxtal Travel</div>
-      El club de viajes de Guatemala.</div>
-    <div style="display:flex;gap:20px;">
-      <a href="https://www.instagram.com/kuxtaltravels/" target="_blank" rel="noopener">Instagram</a>
-      <a href="#hacete-socio">Hacete socio</a>
-    </div>
+  <div class="join-card">
+    <form id="leadForm" novalidate>
+      <div class="field" id="f-nombre"><label for="nombre">Tu nombre</label><input id="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" /><div class="err">Contanos tu nombre.</div></div>
+      <div class="field" id="f-tel"><label for="tel">WhatsApp / Teléfono</label><input id="tel" type="tel" inputmode="numeric" placeholder="0000 0000 (8 dígitos)" autocomplete="tel" /><div class="err">Un número de Guatemala tiene 8 dígitos.</div></div>
+      <div class="field" id="f-email"><label for="email">Correo (opcional)</label><input id="email" type="email" placeholder="vos@correo.com" autocomplete="email" /><div class="err">Revisá el correo.</div></div>
+      <button type="submit" class="btn btn-lima" id="submitBtn">Quiero que me contacten</button>
+      <p class="privacy">🔒 Tus datos van directo al equipo de Kuxtal para contactarte. No los compartimos.</p>
+    </form>
+    <div class="ok-msg" id="okMsg"><div class="big">🎉</div><h3 style="margin:8px 0;color:var(--navy)">¡Gracias, <span id="okName">socio</span>!</h3><p style="color:var(--gray)">Tu solicitud quedó registrada. Si querés, escribinos ya por WhatsApp.</p><a href="#" id="waLink" class="btn btn-lima" style="margin-top:16px;display:inline-block;">Escribir por WhatsApp</a></div>
   </div>
-  <div class="wrap" style="margin-top:22px;font-size:12.5px;opacity:.6;">© 2026 Kuxtal Travel · Guatemala</div>
-</footer>
+</div></section>
+
+<footer><div class="wrap row">
+  <div><div class="logo on-dark" style="margin-bottom:8px"><span class="k">Kuxtal<span class="orbit">✈</span></span><span class="t">Travels</span></div>Cada destino, una historia. · Guatemala</div>
+  <div style="display:flex;gap:20px;"><a href="https://www.instagram.com/kuxtaltravels/" target="_blank" rel="noopener">Instagram</a><a href="#hacete-socio">Hacete socio</a></div>
+</div>
+<div class="wrap" style="margin-top:22px;font-size:12.5px;opacity:.6;">© 2026 Kuxtal Travels · Guatemala · +502 2289 0501</div></footer>
 
 <a class="wa" id="waFloat" href="#hacete-socio" aria-label="WhatsApp">💬</a>
-
 <script>
 (function(){
-  // TODO George: poné el número de WhatsApp real de Kuxtal (con código país, ej: 502XXXXXXXX)
-  var WA_NUMERO = "50200000000";
-  var waMsg = function(n){ return "https://wa.me/"+WA_NUMERO+"?text="+encodeURIComponent("¡Hola Kuxtal! Soy "+(n||"")+" y quiero info para hacerme socio."); };
-  document.getElementById('waFloat').href = waMsg("");
-
-  var form = document.getElementById('leadForm');
-  function setBad(id, bad){ document.getElementById(id).classList.toggle('bad', bad); }
-  form.addEventListener('submit', function(e){
+  var SB_URL="https://tevzfdiumfekvapamovw.supabase.co";
+  var SB_KEY="sb_publishable_MMVJjzrA1rHdnMWxl0zeMA_DTDTTGTJ"; // llave PÚBLICA (solo insertar leads)
+  var WA_NUMERO="50222890501"; // Kuxtal Travels (línea encontrada; ajustar si el WhatsApp es otro celular)
+  var waMsg=function(n){return "https://wa.me/"+WA_NUMERO+"?text="+encodeURIComponent("¡Hola Kuxtal! Soy "+(n||"")+" y quiero info para hacerme socio.");};
+  document.getElementById('waFloat').href=waMsg("");
+  var form=document.getElementById('leadForm'), btn=document.getElementById('submitBtn');
+  function setBad(id,bad){document.getElementById(id).classList.toggle('bad',bad);}
+  function exito(nombre){document.getElementById('okName').textContent=nombre.split(' ')[0];document.getElementById('waLink').href=waMsg(nombre);form.style.display='none';document.getElementById('okMsg').style.display='block';}
+  form.addEventListener('submit',function(e){
     e.preventDefault();
-    var nombre = document.getElementById('nombre').value.trim();
-    var tel = document.getElementById('tel').value.replace(/\D/g,'');
-    var email = document.getElementById('email').value.trim();
-    var okN = nombre.length >= 2;
-    var okT = tel.length === 8;                         // Guatemala = 8 dígitos (regla de calidad de datos)
-    var okE = email === "" || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-    setBad('f-nombre', !okN); setBad('f-tel', !okT); setBad('f-email', !okE);
-    if(!(okN && okT && okE)) return;
-
-    // v1: guardamos el lead localmente y abrimos WhatsApp. (Próximo paso: enviarlo al
-    // almacén AISLADO de Kuxtal — su propia base, separada del ecosistema personal.)
-    try{
-      var leads = JSON.parse(localStorage.getItem('kuxtal_leads')||'[]');
-      leads.push({nombre:nombre, tel:tel, email:email, ts:Date.now()});
-      localStorage.setItem('kuxtal_leads', JSON.stringify(leads));
-    }catch(_){}
-
-    document.getElementById('okName').textContent = nombre.split(' ')[0];
-    document.getElementById('waLink').href = waMsg(nombre);
-    form.style.display = 'none';
-    document.getElementById('okMsg').style.display = 'block';
+    var nombre=document.getElementById('nombre').value.trim();
+    var tel=document.getElementById('tel').value.replace(/\D/g,'');
+    var email=document.getElementById('email').value.trim();
+    var okN=nombre.length>=2, okT=tel.length===8, okE=email===""||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    setBad('f-nombre',!okN);setBad('f-tel',!okT);setBad('f-email',!okE);
+    if(!(okN&&okT&&okE))return;
+    btn.disabled=true;btn.textContent="Enviando…";
+    fetch(SB_URL+"/rest/v1/leads",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({nombre:nombre,telefono:tel,email:(email||null),origen:"web"})})
+      .then(function(r){ if(!r.ok){try{var L=JSON.parse(localStorage.getItem('kuxtal_leads')||'[]');L.push({nombre:nombre,tel:tel,email:email});localStorage.setItem('kuxtal_leads',JSON.stringify(L));}catch(_){}} exito(nombre); })
+      .catch(function(){ exito(nombre); });
   });
 })();
 </script>
