@@ -24,7 +24,7 @@
   .logo{display:inline-flex;flex-direction:column;line-height:1;position:relative;}
   .logo .k{font-family:"Arial Narrow","Helvetica Neue Condensed",Impact,sans-serif;font-stretch:condensed;font-weight:800;font-size:29px;letter-spacing:.02em;text-transform:uppercase;color:var(--kx,var(--navy));}
   .logo .t{font-weight:700;font-size:11px;letter-spacing:.44em;text-transform:uppercase;color:var(--kx,var(--navy));margin-top:1px;margin-left:2px;}
-  .logo .orbit{position:absolute;right:-16px;top:2px;font-size:20px;color:var(--lima);transform:rotate(-16deg);}
+  .logo .orbit{position:absolute;right:-30px;top:-1px;width:36px;height:auto;}
   .on-dark .k,.on-dark .t{--kx:#fff;}
   header{position:fixed;inset:0 0 auto 0;z-index:50;backdrop-filter:blur(10px);background:rgba(15,36,56,.82);border-bottom:1px solid rgba(255,255,255,.08);}
   nav{display:flex;align-items:center;justify-content:space-between;height:66px;}
@@ -80,7 +80,7 @@
 </head>
 <body>
 <header><nav class="wrap">
-  <div class="logo on-dark"><span class="k">Kuxtal<span class="orbit">✈</span></span><span class="t">Travels</span></div>
+  <div class="logo on-dark"><span class="k">Kuxtal<svg class="orbit" viewBox="0 0 40 30" aria-hidden="true"><path d="M2 21 C 11 30 33 27 38 15" fill="none" stroke="#8dc63f" stroke-width="2.6" stroke-linecap="round"/><path fill="#8dc63f" transform="translate(11 -1) scale(0.72) rotate(45 12 12)" d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></span><span class="t">Travels</span></div>
   <div class="links"><a href="#beneficios">Beneficios</a><a href="#destinos">Destinos</a><a href="#como">Cómo funciona</a></div>
   <a href="#hacete-socio" class="btn btn-lima cta">Hacete socio</a>
 </nav></header>
@@ -144,9 +144,9 @@
   </div>
   <div class="join-card">
     <form id="leadForm" novalidate>
-      <div class="field" id="f-nombre"><label for="nombre">Tu nombre</label><input id="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" /><div class="err">Contanos tu nombre.</div></div>
-      <div class="field" id="f-tel"><label for="tel">WhatsApp / Teléfono</label><input id="tel" type="tel" inputmode="numeric" placeholder="0000 0000 (8 dígitos)" autocomplete="tel" /><div class="err">Un número de Guatemala tiene 8 dígitos.</div></div>
-      <div class="field" id="f-email"><label for="email">Correo (opcional)</label><input id="email" type="email" placeholder="vos@correo.com" autocomplete="email" /><div class="err">Revisá el correo.</div></div>
+      <div class="field" id="f-nombre"><label for="nombre">Tu nombre</label><input id="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" /><div class="err" role="alert">Contanos tu nombre.</div></div>
+      <div class="field" id="f-tel"><label for="tel">WhatsApp / Teléfono</label><input id="tel" type="tel" inputmode="numeric" placeholder="0000 0000 (8 dígitos)" autocomplete="tel" /><div class="err" role="alert">Un número de Guatemala tiene 8 dígitos.</div></div>
+      <div class="field" id="f-email"><label for="email">Correo (opcional)</label><input id="email" type="email" placeholder="vos@correo.com" autocomplete="email" /><div class="err" role="alert">Revisá el correo.</div></div>
       <button type="submit" class="btn btn-lima" id="submitBtn">Quiero que me contacten</button>
       <p class="privacy">🔒 Tus datos van directo al equipo de Kuxtal para contactarte. No los compartimos.</p>
     </form>
@@ -155,7 +155,7 @@
 </div></section>
 
 <footer><div class="wrap row">
-  <div><div class="logo on-dark" style="margin-bottom:8px"><span class="k">Kuxtal<span class="orbit">✈</span></span><span class="t">Travels</span></div>Cada destino, una historia. · Guatemala</div>
+  <div><div class="logo on-dark" style="margin-bottom:8px"><span class="k">Kuxtal<svg class="orbit" viewBox="0 0 40 30" aria-hidden="true"><path d="M2 21 C 11 30 33 27 38 15" fill="none" stroke="#8dc63f" stroke-width="2.6" stroke-linecap="round"/><path fill="#8dc63f" transform="translate(11 -1) scale(0.72) rotate(45 12 12)" d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></span><span class="t">Travels</span></div>Cada destino, una historia. · Guatemala</div>
   <div style="display:flex;gap:20px;"><a href="https://www.instagram.com/kuxtaltravels/" target="_blank" rel="noopener">Instagram</a><a href="#hacete-socio">Hacete socio</a></div>
 </div>
 <div class="wrap" style="margin-top:22px;font-size:12.5px;opacity:.6;">© 2026 Kuxtal Travels · Guatemala · +502 2289 0501</div></footer>
@@ -169,20 +169,22 @@
   var waMsg=function(n){return "https://wa.me/"+WA_NUMERO+"?text="+encodeURIComponent("¡Hola Kuxtal! Soy "+(n||"")+" y quiero info para hacerme socio.");};
   document.getElementById('waFloat').href=waMsg("");
   var form=document.getElementById('leadForm'), btn=document.getElementById('submitBtn');
-  function setBad(id,bad){document.getElementById(id).classList.toggle('bad',bad);}
-  function exito(nombre){document.getElementById('okName').textContent=nombre.split(' ')[0];document.getElementById('waLink').href=waMsg(nombre);form.style.display='none';document.getElementById('okMsg').style.display='block';}
+  function setBad(id,bad){var f=document.getElementById(id);f.classList.toggle('bad',bad);var i=f.querySelector('input');if(i)i.setAttribute('aria-invalid',bad?'true':'false');}
+  function exito(nombre){document.getElementById('okName').textContent=nombre.split(' ')[0];document.getElementById('waLink').href=waMsg(nombre);form.style.display='none';var ok=document.getElementById('okMsg');ok.style.display='block';ok.setAttribute('tabindex','-1');try{ok.focus();}catch(_){}}
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var nombre=document.getElementById('nombre').value.trim();
     var tel=document.getElementById('tel').value.replace(/\D/g,'');
+    if(tel.length===11 && tel.indexOf('502')===0) tel=tel.slice(3); // toleran el código de país +502
     var email=document.getElementById('email').value.trim();
     var okN=nombre.length>=2, okT=tel.length===8, okE=email===""||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
     setBad('f-nombre',!okN);setBad('f-tel',!okT);setBad('f-email',!okE);
     if(!(okN&&okT&&okE))return;
+    // RESPALDO local SIEMPRE (el lead nunca se pierde, aunque el CRM falle); luego lo mando al CRM.
+    try{var L=JSON.parse(localStorage.getItem('kuxtal_leads')||'[]');L.push({nombre:nombre,tel:tel,email:email,ts:Date.now()});localStorage.setItem('kuxtal_leads',JSON.stringify(L));}catch(_){}
     btn.disabled=true;btn.textContent="Enviando…";
     fetch(SB_URL+"/rest/v1/leads",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({nombre:nombre,telefono:tel,email:(email||null),origen:"web"})})
-      .then(function(r){ if(!r.ok){try{var L=JSON.parse(localStorage.getItem('kuxtal_leads')||'[]');L.push({nombre:nombre,tel:tel,email:email});localStorage.setItem('kuxtal_leads',JSON.stringify(L));}catch(_){}} exito(nombre); })
-      .catch(function(){ exito(nombre); });
+      .then(function(){ exito(nombre); }).catch(function(){ exito(nombre); });
   });
 })();
 </script>
