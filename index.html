@@ -31,7 +31,9 @@
   nav .links{display:none;gap:26px;color:rgba(255,255,255,.85);font-size:15px;font-weight:500;}
   nav .links a:hover{color:var(--lima);}
   nav .cta{padding:10px 20px;font-size:14px;}
+  .navright{display:flex;align-items:center;gap:14px;}
   @media(min-width:840px){ nav .links{display:flex;} }
+  @media(max-width:400px){ .navright{gap:9px;} nav .cta{padding:9px 14px;font-size:13px;} .logo .k{font-size:24px;} }
   .hero{position:relative;min-height:100svh;display:flex;align-items:center;color:#fff;padding:98px 0 60px;background:radial-gradient(120% 95% at 82% 8%,#22467a 0%,var(--navy) 42%,var(--navy-d) 100%);overflow:hidden;}
   .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;background:radial-gradient(38% 40% at 12% 88%,rgba(141,198,63,.30),transparent),radial-gradient(34% 34% at 92% 62%,rgba(141,198,63,.12),transparent);}
   .hero-inner{position:relative;z-index:2;max-width:700px;}
@@ -82,7 +84,10 @@
 <header><nav class="wrap">
   <div class="logo on-dark"><span class="k">Kuxtal<svg class="orbit" viewBox="0 0 40 30" aria-hidden="true"><path d="M2 21 C 11 30 33 27 38 15" fill="none" stroke="#8dc63f" stroke-width="2.6" stroke-linecap="round"/><path fill="#8dc63f" transform="translate(11 -1) scale(0.72) rotate(45 12 12)" d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></span><span class="t">Travels</span></div>
   <div class="links"><a href="#beneficios">Beneficios</a><a href="#destinos">Destinos</a><a href="#como">Cómo funciona</a></div>
-  <a href="#hacete-socio" class="btn btn-lima cta">Hacete socio</a>
+  <div class="navright">
+    <a href="https://jorgerramirezh-rocky.github.io/kuxtal-crm/" target="_blank" rel="noopener" style="color:rgba(255,255,255,.85);font-size:14px;font-weight:600">Ingresar</a>
+    <a href="#hacete-socio" class="btn btn-lima cta">Hacete socio</a>
+  </div>
 </nav></header>
 
 <section class="hero"><div class="wrap hero-inner">
@@ -147,6 +152,7 @@
       <div class="field" id="f-nombre"><label for="nombre">Tu nombre</label><input id="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" /><div class="err" role="alert">Contanos tu nombre.</div></div>
       <div class="field" id="f-tel"><label for="tel">WhatsApp / Teléfono</label><input id="tel" type="tel" inputmode="numeric" placeholder="0000 0000 (8 dígitos)" autocomplete="tel" /><div class="err" role="alert">Un número de Guatemala tiene 8 dígitos.</div></div>
       <div class="field" id="f-email"><label for="email">Correo (opcional)</label><input id="email" type="email" placeholder="vos@correo.com" autocomplete="email" /><div class="err" role="alert">Revisá el correo.</div></div>
+      <input type="text" id="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <button type="submit" class="btn btn-lima" id="submitBtn">Quiero que me contacten</button>
       <p class="privacy">🔒 Tus datos van directo al equipo de Kuxtal para contactarte. No los compartimos.</p>
     </form>
@@ -180,6 +186,7 @@
     var okN=nombre.length>=2, okT=tel.length===8, okE=email===""||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
     setBad('f-nombre',!okN);setBad('f-tel',!okT);setBad('f-email',!okE);
     if(!(okN&&okT&&okE))return;
+    if(document.getElementById('hp').value){ exito(nombre); return; } // honeypot: bot → fingimos éxito, NO guardamos
     // RESPALDO local SIEMPRE (el lead nunca se pierde, aunque el CRM falle); luego lo mando al CRM.
     try{var L=JSON.parse(localStorage.getItem('kuxtal_leads')||'[]');L.push({nombre:nombre,tel:tel,email:email,ts:Date.now()});localStorage.setItem('kuxtal_leads',JSON.stringify(L));}catch(_){}
     btn.disabled=true;btn.textContent="Enviando…";
