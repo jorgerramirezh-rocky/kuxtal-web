@@ -207,6 +207,15 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
 .bene b{font-size:15px;display:block}
 .bene span{font-size:12.5px;color:rgba(255,255,255,.66)}
 .club-cta{margin-top:24px}
+/* formulario de contacto (lead → Prospectos del CRM) */
+.lead-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:600px;margin:22px auto 0}
+.lead-in{flex:1 1 190px;min-width:0;font-size:16px;padding:13px 16px;border-radius:var(--r-ctrl);border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.97);color:#12263c;min-height:48px}
+.lead-in::placeholder{color:#5c6b7e}
+.lead-in:focus{outline:none;border-color:var(--lima);box-shadow:0 0 0 3px rgba(141,198,63,.35)}
+.lead-form .btn{flex:0 0 auto}
+.lead-msg{margin-top:14px;font-size:15.5px;min-height:1.4em;font-weight:700;color:#fff}
+.lead-msg.ok{color:var(--lima)}
+.lead-msg.err{color:#ffd7cf}
 </style>
 </head>
 <body>
@@ -387,6 +396,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
       <a class="btn btn-primary" href="https://wa.me/50223696209" target="_blank" rel="noopener">Quiero ser socio</a>
       <button class="btn btn-ghost" id="ing-cta" style="color:#fff">Ya soy socio · Ingresar</button>
     </div>
+    <form class="lead-form" id="leadForm" novalidate>
+      <input class="lead-in" id="lf-nombre" type="text" placeholder="Tu nombre" maxlength="80" autocomplete="name" aria-label="Tu nombre" required>
+      <input class="lead-in" id="lf-tel" type="tel" placeholder="Tu WhatsApp" inputmode="tel" maxlength="20" autocomplete="tel" aria-label="Tu WhatsApp">
+      <button class="btn btn-primary" type="submit" id="lf-btn">Quiero información</button>
+    </form>
+    <p class="lead-msg" id="lf-msg" role="status" aria-live="polite"></p>
   </div>
 </section>
 
@@ -423,6 +438,20 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
   var path=document.getElementById('arc'),plane=document.getElementById('plane'),flight=document.getElementById('flight');
   if(path&&path.getTotalLength){var L=path.getTotalLength(),t0=null,dur=2800;requestAnimationFrame(function s(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-p,2);var pt=path.getPointAtLength(e*L),nx=path.getPointAtLength(Math.min(L,e*L+1));var r=flight.getBoundingClientRect(),sx=r.width/1200,sy=r.height/520;var a=Math.atan2((nx.y-pt.y)*sy,(nx.x-pt.x)*sx)*180/Math.PI;plane.style.left=(pt.x*sx-17)+'px';plane.style.top=(pt.y*sy-17)+'px';plane.style.transform='rotate('+(a+45)+'deg)';plane.style.opacity=p<0.02?0:1;if(p<1)requestAnimationFrame(s);});}
  }
+ // Formulario de contacto → cae como lead en Prospectos del CRM (RLS deja insertar a anon)
+ var SBURL="https://tevzfdiumfekvapamovw.supabase.co",SBPUB="sb_publishable_MMVJjzrA1rHdnMWxl0zeMA_DTDTTGTJ";
+ var LF=document.getElementById('leadForm');
+ if(LF)LF.addEventListener('submit',function(e){
+   e.preventDefault();
+   var nm=(document.getElementById('lf-nombre').value||'').trim(),tel=(document.getElementById('lf-tel').value||'').trim();
+   var msg=document.getElementById('lf-msg'),btn=document.getElementById('lf-btn');
+   if(nm.length<2){msg.className='lead-msg err';msg.textContent='Escribí tu nombre, porfa.';return;}
+   btn.disabled=true;var orig=btn.textContent;btn.textContent='Enviando…';
+   fetch(SBURL+'/rest/v1/leads',{method:'POST',headers:{'apikey':SBPUB,'Authorization':'Bearer '+SBPUB,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({nombre:nm,telefono:tel,origen:'web',estado:'nuevo',nota:'Pidió información desde la web'})})
+    .then(function(r){if(!r.ok)throw 0;LF.reset();msg.className='lead-msg ok';msg.textContent='¡Gracias! Te contactamos pronto por WhatsApp. ✈';})
+    .catch(function(){msg.className='lead-msg err';msg.textContent='No pudimos enviarlo. Escribinos por WhatsApp al 2369-6209.';})
+    .finally(function(){btn.disabled=false;btn.textContent=orig;});
+ });
  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
 })();
 </script>
