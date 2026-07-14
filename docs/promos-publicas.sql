@@ -7,12 +7,17 @@
 -- hereda el RLS de ofertas; anon solo ve estas 9 columnas de las promos
 -- activas marcadas tipo_objetivo='publico'. La tabla ofertas sigue
 -- cerrada para anon (sin GRANT directo).
+-- security_barrier = on: evita que un predicado del cliente se evalúe
+-- antes del filtro de la vista (fuga clásica en vistas-filtro para anon).
+-- Filtro de vigencia: la web promete "vigentes hoy" y nadie desactiva
+-- promos vencidas a mano; hoy = fecha de Guatemala (UTC-6), no UTC.
 
 create or replace view public.promos_publicas
-with (security_invoker = off) as
+with (security_invoker = off, security_barrier = on) as
 select id, emoji, titulo, descripcion, descuento, link, ubicacion, foto, vigencia_hasta
 from public.ofertas
-where activa and tipo_objetivo = 'publico';
+where activa and tipo_objetivo = 'publico'
+  and (vigencia_hasta is null or vigencia_hasta >= (now() at time zone 'America/Guatemala')::date);
 
 grant select on public.promos_publicas to anon;
 
