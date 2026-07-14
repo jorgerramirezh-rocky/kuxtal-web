@@ -216,6 +216,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
 .lead-msg{margin-top:14px;font-size:15.5px;min-height:1.4em;font-weight:700;color:#fff}
 .lead-msg.ok{color:var(--lima)}
 .lead-msg.err{color:#ffd7cf}
+/* promos públicas (vista promos_publicas; oculta si no hay datos) */
+#promos[hidden]{display:none}
+.promo-emoji{font-size:26px;line-height:1}
+.promo-foto{width:100%;max-width:100%;border-radius:12px;margin-top:10px;display:block}
+.promo-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.promo-link{display:inline-block;margin-top:10px;font-weight:700;color:var(--lima-deep)}
 </style>
 </head>
 <body>
@@ -355,6 +361,16 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
   </div>
 </section>
 
+<!-- PROMOS PÚBLICAS · se llena desde la vista promos_publicas; si no hay datos o falla, queda oculta -->
+<section id="promos" class="wrap" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Por tiempo limitado</span>
+    <h2>Promociones</h2>
+    <p>Beneficios abiertos del club, vigentes hoy. Aprovechalos antes de que se acaben.</p>
+  </div>
+  <div class="offers" id="promos-list"></div>
+</section>
+
 <!-- KUXTAL CLUB -->
 <section id="club-band" class="club">
   <div class="wrap club-grid">
@@ -452,6 +468,31 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:52px 0
     .catch(function(){msg.className='lead-msg err';msg.textContent='No pudimos enviarlo. Escribinos por WhatsApp al 2369-6209.';})
     .finally(function(){btn.disabled=false;btn.textContent=orig;});
  });
+ // Promos públicas → LECTURA de la vista promos_publicas. Degrada con gracia:
+ // si la vista no existe, falla la red o viene vacía, la sección sigue oculta y no pasa nada.
+ (function(){
+   var sec=document.getElementById('promos'),list=document.getElementById('promos-list');
+   if(!sec||!list)return;
+   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+   fetch(SBURL+'/rest/v1/promos_publicas?select=*&order=vigencia_hasta.asc.nullslast',{headers:{'apikey':SBPUB,'Authorization':'Bearer '+SBPUB}})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(rows){
+      if(!Array.isArray(rows)||!rows.length)return;
+      list.innerHTML=rows.map(function(p){
+        var tags='';
+        if(p.descuento)tags+='<span class="tag">'+esc(p.descuento)+'</span>';
+        if(p.vigencia_hasta)tags+='<span class="tag">Hasta '+esc(p.vigencia_hasta)+'</span>';
+        if(p.ubicacion)tags+='<span class="tag">&#128205; '+esc(p.ubicacion)+'</span>';
+        var foto=(p.foto&&/^https:\/\//.test(p.foto))?'<img class="promo-foto" src="'+esc(p.foto)+'" alt="" loading="lazy">':'';
+        var link=(p.link&&/^https?:\/\//.test(p.link))?'<a class="promo-link" href="'+esc(p.link)+'" target="_blank" rel="noopener">Ver m&aacute;s &rarr;</a>':'';
+        return '<article class="offer"><div class="ico"><span class="promo-emoji">'+esc(p.emoji||'🎁')+'</span></div>'
+          +'<div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.descripcion||'')+'</p>'
+          +'<div class="promo-meta">'+tags+'</div>'+foto+link+'</div></article>';
+      }).join('');
+      sec.hidden=false;
+    })
+    .catch(function(){/* vista aún no creada o sin red: sección oculta, cero ruido */});
+ })();
  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
 })();
 </script>
