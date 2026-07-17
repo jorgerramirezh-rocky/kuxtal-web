@@ -1,0 +1,67 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# qa.yml — QA mínima de kuxtal-web (nace 17-jul-2026, adversaria del candado)
+#
+#  Por qué existe: kuxtal-web entró al candado + publicador de 1 toque
+#  (/fusionar), y el radar trata "sin checks" como listo — sin esta puerta,
+#  un HTML roto podía irse EN VIVO (GitHub Pages) con un tap. Regla de la
+#  casa: no se publica sin pruebas en verde.
+#  Solo herramientas del runner (node) — cero dependencias = cero supply chain.
+#  Al fusionar este workflow: marcar el check `qa` como REQUIRED en la
+#  protección de main (si no, corre pero no es compuerta).
+# ─────────────────────────────────────────────────────────────────────────────
+name: qa
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5   # v4.3.1 (pin por SHA)
+
+      - name: HTML sano (parsea + etiquetas balanceadas + scripts inline válidos)
+        run: |
+          set -euo pipefail
+          node - <<'EOF'
+          const fs = require("fs");
+          const vm = require("vm");
+          let fallos = 0;
+          for (const f of fs.readdirSync(".").filter(x => x.endsWith(".html"))) {
+            const t = fs.readFileSync(f, "utf8");
+            // 1) etiquetas estructurales balanceadas (un </div> perdido rompe el layout)
+            for (const tag of ["div", "section", "main", "header", "footer", "form", "script", "style"]) {
+              const abre = (t.match(new RegExp("<" + tag + "(\\s|>)", "g")) || []).length;
+              const cierra = (t.match(new RegExp("</" + tag + ">", "g")) || []).length;
+              if (abre !== cierra) { console.error(`❌ ${f}: <${tag}> desbalanceado (${abre} abre, ${cierra} cierra)`); fallos++; }
+            }
+            // 2) los <script> inline deben COMPILAR (un SyntaxError mata la página entera)
+            const scripts = [...t.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)];
+            scripts.forEach((m, i) => {
+              const js = m[1];
+              if (!js.trim() || /type\s*=\s*["'](application\/json|importmap)/i.test(m[0])) return;
+              try { new vm.Script(js, { filename: `${f}#script${i}` }); }
+              catch (e) { console.error(`❌ ${f} script #${i}: ${e.message}`); fallos++; }
+            });
+            console.log(`✓ ${f}: ${scripts.length} script(s) inline compilados, etiquetas balanceadas`);
+          }
+          if (fallos) { console.error(`\n🔴 ${fallos} fallo(s)`); process.exit(1); }
+          EOF
+
+      - name: JS suelto compila (sw.js y compañía)
+        run: |
+          set -euo pipefail
+          n=0
+          for f in *.js; do
+            [ -f "$f" ] || continue
+            node --check "$f"; n=$((n+1))
+          done
+          echo "✅ $n archivo(s) .js compilan"
+
+      - name: El manifest es JSON válido
+        run: |
+          set -euo pipefail
+          node -e 'JSON.parse(require("fs").readFileSync("manifest.webmanifest","utf8")); console.log("✅ manifest válido")'
